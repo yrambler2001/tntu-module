@@ -3,8 +3,9 @@ module.exports = {
     "es6": true,
     "node": true
   },
+  "parser": "babel-eslint",
   "plugins": ["prettier"],
-  "extends": ["eslint:recommended", "lambdas"],
+  "extends": ["eslint:recommended", "airbnb", "lambdas"],
   "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"
@@ -15,7 +16,9 @@ module.exports = {
   },
   "rules": {
     "prettier/prettier": "error",
-    quotes: [2, "single", "avoid-escape"]
+    quotes: [2, "single", "avoid-escape"],
     // avoidEscape: true
+    "max-len": 0,
+    "object-curly-newline": 0,
   }
 };
