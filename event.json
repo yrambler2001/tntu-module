@@ -1,0 +1,77 @@
+{
+  "resource": "/serverlessrepo-hello-world-helloworld-1IOVGAXW3D6OG",
+  "path": "/serverlessrepo-hello-world-helloworld-1IOVGAXW3D6OG",
+  "httpMethod": "POST",
+  "headers": {
+    "Accept": "application/json, text/plain, */*",
+    "Content-Type": "application/json;charset=utf-8",
+    "Host": "he1amt93xj.execute-api.us-east-1.amazonaws.com",
+    "User-Agent": "axios/0.19.2",
+    "X-Amzn-Trace-Id": "Root=1-5e32b1e9-487fa1263c08f88f31a2ad73",
+    "X-Forwarded-For": "95.46.140.79",
+    "X-Forwarded-Port": "443",
+    "X-Forwarded-Proto": "https"
+  },
+  "multiValueHeaders": {
+    "Accept": [
+      "application/json, text/plain, */*"
+    ],
+    "Content-Type": [
+      "application/json;charset=utf-8"
+    ],
+    "Host": [
+      "he1amt93xj.execute-api.us-east-1.amazonaws.com"
+    ],
+    "User-Agent": [
+      "axios/0.19.2"
+    ],
+    "X-Amzn-Trace-Id": [
+      "Root=1-5e32b1e9-487fa1263c08f88f31a2ad73"
+    ],
+    "X-Forwarded-For": [
+      "95.46.140.79"
+    ],
+    "X-Forwarded-Port": [
+      "443"
+    ],
+    "X-Forwarded-Proto": [
+      "https"
+    ]
+  },
+  "queryStringParameters": null,
+  "multiValueQueryStringParameters": null,
+  "pathParameters": null,
+  "stageVariables": null,
+  "requestContext": {
+    "resourceId": "kdazjt",
+    "resourcePath": "/serverlessrepo-hello-world-helloworld-1IOVGAXW3D6OG",
+    "httpMethod": "POST",
+    "extendedRequestId": "HHC8gE9JoAMFY5w=",
+    "requestTime": "30/Jan/2020:10:37:29 +0000",
+    "path": "/default/serverlessrepo-hello-world-helloworld-1IOVGAXW3D6OG",
+    "accountId": "121491184543",
+    "protocol": "HTTP/1.1",
+    "stage": "default",
+    "domainPrefix": "he1amt93xj",
+    "requestTimeEpoch": 1580380649530,
+    "requestId": "f5c3ef00-25c2-4ebe-aa79-fa6425c4635f",
+    "identity": {
+      "cognitoIdentityPoolId": null,
+      "accountId": null,
+      "cognitoIdentityId": null,
+      "caller": null,
+      "sourceIp": "95.46.140.79",
+      "principalOrgId": null,
+      "accessKey": null,
+      "cognitoAuthenticationType": null,
+      "cognitoAuthenticationProvider": null,
+      "userArn": null,
+      "userAgent": "axios/0.19.2",
+      "user": null
+    },
+    "domainName": "he1amt93xj.execute-api.us-east-1.amazonaws.com",
+    "apiId": "he1amt93xj"
+  },
+  "body": "{\"inputData\":{\"city\":\"Roma\",\"category\":\"pizza\",\"url\":\"123\"},\"requestType\":\"list\",\"isMOCK\":true}",
+  "isBase64Encoded": false
+}
