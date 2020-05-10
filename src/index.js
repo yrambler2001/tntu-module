@@ -17,9 +17,10 @@ import AWS from 'aws-sdk'
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const getDOM = (HTMLString) => new JSDOM(HTMLString).window.document;
-const doNotUseMock = true
+const doNotUseMock = false
 // eslint-disable-next-line consistent-return
 export const handler = async (a, b) => {
+  const currentDate = new Date().toISOString()
   const isAWS = typeof b.getRemainingTimeInMillis === 'function';
   const startTime = new Date().getTime();
   const event = a;
@@ -94,30 +95,64 @@ export const handler = async (a, b) => {
       .map((test) => ({ test, courseName: course.name, lecturer: course.lecturer })))
     .filter((c) => c.length)
     .flat();
-  const transformedData = `${activeTests.length} активних тестів\n${
+  let transformedData = `${activeTests.length}  активних тестів\n${
     Object.entries(groupBy(activeTests, 'courseName'))
-      .map(([courseName, tests]) => `${tests[0].lecturer} - ${courseName}:${tests.length ? `\n${
+      .map(([courseName, tests]) => `    ${tests[0].lecturer} - ${courseName}:${tests.length ? `\n${
         tests
-          .map((test) => `${test.test.name}: ${test.test.startDate} - ${test.test.endDate}`)
+          .map((test) => `    ${test.test.name}: ${test.test.startDate} - ${test.test.endDate}`)
           .join('\n')}` : ' -'}`)
       .join('\n\n')
-  }\n\nYuriy Synyshyn${doNotUseMock ? '' : '\n(mocked data)'}`
+  }\n\n    Yuriy Synyshyn${doNotUseMock ? '' : '\n(mocked data)'}`
 
-  await fetch(`https://api.telegram.org/${telegramBotKey}/sendMessage`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ chat_id: myChatId, text: transformedData }),
-  });
+  let shouldSend = true;
+  const silent = false;
+  try {
+    const docClient = new AWS.DynamoDB.DocumentClient({ region: 'eu-west-3' });
 
-  // const docClient = new AWS.DynamoDB.DocumentClient({ region: 'eu-west-3' });
 
-  // const scanningParameters = {
-  //   TableName: 'tntu-modules',
-  //   Limit: 100,
-  // };
+    const paramsQuery = {
+      TableName: 'tntu-module-1',
+      // KeyConditionExpression: 'id = :v_ID AND createdAt > :v_created',
+      // ExpressionAttributeValues: { ':v_ID': '1', ':v_created': '2020' },
+      KeyConditionExpression: 'id = :v_ID',
+      ExpressionAttributeValues: { ':v_ID': '1' },
+      Limit: 10,
+      ScanIndexForward: false, // true = ascending, false = descending
+    };
+    const aa = await new Promise((res, rej) => docClient.query(paramsQuery, (err, data) => (err ? rej(err) : res(data))))
+    console.log(aa)
+    if (aa.Items[0].count === activeTests.length) {
+      shouldSend = false;
+      // silent = true;
+    }
 
-  // const aa = await new Promise((res, rej) => docClient.scan(scanningParameters, (err, data) => (err ? rej(err) : res(data))))
-  // console.log(aa)
+    const params = {
+      TableName: 'tntu-module-1',
+      Item: {
+        'id': '1',
+        'count': activeTests.length,
+        'createdAt': currentDate,
+      },
+    };
+
+    const ab = await new Promise((res, rej) => docClient.put(params, (err, data) => (err ? rej(err) : res(data))))
+    console.log(ab)
+  } catch (e) {
+    shouldSend = true;
+    console.log(e)
+    transformedData += '\nerror';
+  }
+
+  // console.log(silent)
+  const eachDayLogCondition = currentDate.includes('T18:10') || currentDate.includes('T17:11') || currentDate.includes('T18:09')
+  console.log({ shouldSend, eachDayLogCondition });
+  if (shouldSend || eachDayLogCondition) {
+    await fetch(`https://api.telegram.org/${telegramBotKey}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: myChatId, disable_notification: eachDayLogCondition || silent, text: `${transformedData}` }),
+    });
+  }
 
   const endTime = new Date().getTime();
   const response = {
