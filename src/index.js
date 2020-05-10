@@ -144,7 +144,7 @@ export const handler = async (a, b) => {
   }
 
   // console.log(silent)
-  const eachDayLogCondition = currentDate.includes('T18:10') || currentDate.includes('T17:11') || currentDate.includes('T18:09')
+  const eachDayLogCondition = currentDate.includes('T18:10') || currentDate.includes('T18:11') || currentDate.includes('T18:09')
   console.log({ shouldSend, eachDayLogCondition });
   if (shouldSend || eachDayLogCondition) {
     await fetch(`https://api.telegram.org/${telegramBotKey}/sendMessage`, {
