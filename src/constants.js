@@ -3,7 +3,7 @@ export const defaultUserAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Apple
 export const domain = 'https://dl.tntu.edu.ua/';
 
 export const coursesPage = '/bounce.php?course=0';
-
+export const testBlackListWords = ['самоконтрол', 'самопідготовк', 'вхідн', 'тренувальн'];
 export const courseLecturers = {
   1327: 'Михалик Дмитро Михайлович',
   1353: 'Цуприк Галина Богданівна',

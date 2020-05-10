@@ -9,9 +9,11 @@ import { fetchTNTUPage } from './fetch';
 import fetch from 'node-fetch'
 import { JSDOM } from 'jsdom';
 import uniqBy from 'lodash/uniqBy';
+import groupBy from 'lodash/groupBy';
 import { ignoreCourseIds, key, telegramBotKey, myChatId } from './privateConstants';
-import { courseLecturers } from './constants';
+import { courseLecturers, testBlackListWords } from './constants';
 import { mock } from './mock'
+import AWS from 'aws-sdk'
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const getDOM = (HTMLString) => new JSDOM(HTMLString).window.document;
@@ -84,19 +86,46 @@ export const handler = async (a, b) => {
       // error = errorToJSON(e);
     }
   } else { responseData = mock; }
-  const transformedData = `${responseData.map((course) => `${course.lecturer}:\nТести:\n${course.modulesTable.filter((test) => test.isActive).map((test) => `${test.name}: ${test.startDate} - ${test.endDate}`).join('\n')}`).join('\n\n')}\n\nYuriy Synyshyn`
+  const testNameIsNotBlacklisted = (testName) => !testBlackListWords.find((blacklistWord) => testName.toLowerCase().includes(blacklistWord));
+
+  const activeTests = responseData
+    .map((course) => course.modulesTable
+      .filter((test) => test.isActive && testNameIsNotBlacklisted(test.name))
+      .map((test) => ({ test, courseName: course.name, lecturer: course.lecturer })))
+    .filter((c) => c.length)
+    .flat();
+  const transformedData = `${activeTests.length} активних тестів\n${
+    Object.entries(groupBy(activeTests, 'courseName'))
+      .map(([courseName, tests]) => `${tests[0].lecturer} - ${courseName}:${tests.length ? `\n${
+        tests
+          .map((test) => `${test.test.name}: ${test.test.startDate} - ${test.test.endDate}`)
+          .join('\n')}` : ' -'}`)
+      .join('\n\n')
+  }\n\nYuriy Synyshyn${doNotUseMock ? '' : '\n(mocked data)'}`
+
   await fetch(`https://api.telegram.org/${telegramBotKey}/sendMessage`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ chat_id: myChatId, text: transformedData }),
   });
+
+  // const docClient = new AWS.DynamoDB.DocumentClient({ region: 'eu-west-3' });
+
+  // const scanningParameters = {
+  //   TableName: 'tntu-modules',
+  //   Limit: 100,
+  // };
+
+  // const aa = await new Promise((res, rej) => docClient.scan(scanningParameters, (err, data) => (err ? rej(err) : res(data))))
+  // console.log(aa)
+
   const endTime = new Date().getTime();
   const response = {
     statusCode: 200,
     body: JSON.stringify({ event, responseData, error, time: endTime - startTime }),
     isBase64Encoded: false,
   };
-  console.log(response.body);
+  // console.log(response.body);
   if (isAWS) {
     // eslint-disable-next-line consistent-return
     return response;
