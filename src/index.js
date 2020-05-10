@@ -42,7 +42,7 @@ export const handler = async (a, b) => {
     }
     const allModules = [];
     // console.log(activeCourses);
-    for (const course of [activeCourses[0]]) {
+    for (const course of activeCourses) {
       const { link, name, courseId, lecturer } = course;
       await sleep(2000);
       await fetch({ page: link });
