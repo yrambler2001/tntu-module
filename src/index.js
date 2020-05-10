@@ -102,7 +102,7 @@ export const handler = async (a, b) => {
           .map((test) => `    ${test.test.name}: ${test.test.startDate} - ${test.test.endDate}`)
           .join('\n')}` : ' -'}`)
       .join('\n\n')
-  }\n\n    Yuriy Synyshyn${doNotUseMock ? '' : '\n(mocked data)'}`
+  }\n\n    ©Yuriy Synyshyn${doNotUseMock ? '' : '\n(mocked data)'}`
 
   let shouldSend = true;
   const silent = false;
