@@ -7,7 +7,7 @@
     "setup": "./node_modules/.bin/node-lambda setup",
     "test": "./node_modules/.bin/node-lambda run",
     "package": "./node_modules/.bin/node-lambda package",
-    "deploy": "rm function.zip; npm run build && zip -r function.zip -q . && aws2 lambda update-function-code --function-name tntu-module --zip-file fileb://function.zip",
+    "deploy": "rm function.zip; npm run build && zip -r function.zip -q . && aws lambda update-function-code --function-name tntu-module --zip-file fileb://function.zip",
     "zip": "rm function.zip; npm run build && zip -r function.zip -q .",
     "deploy__": "./node_modules/.bin/node-lambda deploy",
     "build": "babel src --out-dir dist",
@@ -17,7 +17,8 @@
     "release": "standard-version",
     "release:major": "npm run release -- --release-as major",
     "release:minor": "npm run release -- --release-as minor",
-    "release:patch": "npm run release -- --release-as patch"
+    "release:patch": "npm run release -- --release-as patch",
+    "prod-modules": "rm -rf ./node_modules; npm i --only=prod"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.3",
@@ -40,18 +41,12 @@
     "node-lambda": "^0.9.0",
     "prettier": "^1.19.1",
     "standard-version": "^7.1.0",
-    "tor-axios": "^1.0.8",
     "aws-xray-sdk": "^2.5.0"
   },
   "dependencies": {
-    "axios": "^0.19.2",
     "jsdom": "^16.2.0",
     "lodash": "^4.17.15",
     "node-fetch": "^2.6.0",
-    "query-string": "^6.10.1",
-    "request": "^2.88.2",
-    "request-promise": "^4.2.5",
-    "request-promise-native": "^1.0.8",
     "serialize-error": "^5.0.0"
   },
   "config": {

@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 /* eslint-disable quote-props */
 import { domain } from './constants';
 import fetch from 'node-fetch';
@@ -15,7 +16,8 @@ const headers = {
   cookie,
 };
 
-export const load = async ({ page }) => {
+export const fetchTNTUPage = async ({ page }) => {
+  console.log(new Date(), page);
   const response = await fetch(page.includes('://') ? page : `${domain}${page}`, {
     headers,
     referrer: 'https://dl.tntu.edu.ua/index.php',
@@ -24,53 +26,7 @@ export const load = async ({ page }) => {
     method: 'GET',
     mode: 'cors',
   });
+  console.log(new Date(), page, 'end');
   const text = await response.text();
   return { response, text };
-
-  // try {
-  //   let data;
-  //   if (isMOCK) {
-  //     data = readMock(fetchURL);
-  //     console.log(`Not found mock: ${ fetchURL }`);
-  //     if (!data) return load(fetchURL, { timeout, isMOCK: false, testThrowError, returnDataEvenIfError, isDefaultUserAgent });
-  //   } else if (isTOR) {
-  //     // can be used only when tor is launched in system
-  //     if (mockize) {
-  //       data = readMock(fetchURL);
-  //       if (!data) {
-  //         const tor = torAxios.torSetup({ ip: 'localhost', port: 9050 });
-  //         const fetchedData = await tor.get(fetchURL, { headers: { 'User-Agent': defaultUserAgent } });
-  //         writeMock(fetchURL, fetchedData.data);
-  //         data = readMock(fetchURL);
-  //       }
-  //     } else {
-  //       const tor = torAxios.torSetup({ ip: 'localhost', port: 9050 });
-  //       data = await tor.get(fetchURL, { headers: { 'User-Agent': defaultUserAgent } });
-  //     }
-  //   } else {
-  //     const source = CancelToken.source();
-  //     let timeoutId;
-  //     if (timeout) {
-  //       timeoutId = setTimeout(() => {
-  //         source.cancel(`Timeout error(${ timeout }ms).Internal code: 29837450`); // unique random number => will be in error's message
-  //       }, timeout);
-  //     }
-  //     try {
-  //       data = await axios.get(fetchURL, { crossdomain: true, cancelToken: source.token, headers: { 'User-Agent': defaultUserAgent } });
-  //     } catch (error) {
-  //       if (timeoutId) clearTimeout(timeoutId); // !important, aws lambda waits until all timeouts finish
-  //       throw error;
-  //     }
-  //     if (timeoutId) clearTimeout(timeoutId); // !important, aws lambda waits until all timeouts finish
-  //   }
-  //   if (data.status === 200) console.log('200');
-  //   return data;
-  // } catch (error) {
-  //   if (returnDataEvenIfError && error.response) {
-  //     return error.response;
-  //   }
-  //   throw error;
-  // }
 };
-
-export default load;

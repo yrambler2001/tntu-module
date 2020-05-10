@@ -1,77 +1,39 @@
 {
-  "resource": "/serverlessrepo-hello-world-helloworld-1IOVGAXW3D6OG",
-  "path": "/serverlessrepo-hello-world-helloworld-1IOVGAXW3D6OG",
-  "httpMethod": "POST",
-  "headers": {
-    "Accept": "application/json, text/plain, */*",
-    "Content-Type": "application/json;charset=utf-8",
-    "Host": "he1amt93xj.execute-api.us-east-1.amazonaws.com",
-    "User-Agent": "axios/0.19.2",
-    "X-Amzn-Trace-Id": "Root=1-5e32b1e9-487fa1263c08f88f31a2ad73",
-    "X-Forwarded-For": "95.46.140.79",
-    "X-Forwarded-Port": "443",
-    "X-Forwarded-Proto": "https"
-  },
-  "multiValueHeaders": {
-    "Accept": [
-      "application/json, text/plain, */*"
-    ],
-    "Content-Type": [
-      "application/json;charset=utf-8"
-    ],
-    "Host": [
-      "he1amt93xj.execute-api.us-east-1.amazonaws.com"
-    ],
-    "User-Agent": [
-      "axios/0.19.2"
-    ],
-    "X-Amzn-Trace-Id": [
-      "Root=1-5e32b1e9-487fa1263c08f88f31a2ad73"
-    ],
-    "X-Forwarded-For": [
-      "95.46.140.79"
-    ],
-    "X-Forwarded-Port": [
-      "443"
-    ],
-    "X-Forwarded-Proto": [
-      "https"
-    ]
-  },
-  "queryStringParameters": null,
-  "multiValueQueryStringParameters": null,
-  "pathParameters": null,
-  "stageVariables": null,
-  "requestContext": {
-    "resourceId": "kdazjt",
-    "resourcePath": "/serverlessrepo-hello-world-helloworld-1IOVGAXW3D6OG",
-    "httpMethod": "POST",
-    "extendedRequestId": "HHC8gE9JoAMFY5w=",
-    "requestTime": "30/Jan/2020:10:37:29 +0000",
-    "path": "/default/serverlessrepo-hello-world-helloworld-1IOVGAXW3D6OG",
-    "accountId": "121491184543",
-    "protocol": "HTTP/1.1",
-    "stage": "default",
-    "domainPrefix": "he1amt93xj",
-    "requestTimeEpoch": 1580380649530,
-    "requestId": "f5c3ef00-25c2-4ebe-aa79-fa6425c4635f",
-    "identity": {
-      "cognitoIdentityPoolId": null,
-      "accountId": null,
-      "cognitoIdentityId": null,
-      "caller": null,
-      "sourceIp": "95.46.140.79",
-      "principalOrgId": null,
-      "accessKey": null,
-      "cognitoAuthenticationType": null,
-      "cognitoAuthenticationProvider": null,
-      "userArn": null,
-      "userAgent": "axios/0.19.2",
-      "user": null
+  "body-json": {},
+  "params": {
+    "path": {},
+    "querystring": {
+      "key": ""
     },
-    "domainName": "he1amt93xj.execute-api.us-east-1.amazonaws.com",
-    "apiId": "he1amt93xj"
+    "header": {
+      "Accept": "*/*",
+      "Host": "h8m15ypjy8.execute-api.eu-west-3.amazonaws.com",
+      "User-Agent": "Mozilla/4.0 (compatible; cron-job.org; http://cron-job.org/abuse/)",
+      "X-Amzn-Trace-Id": "Root=1-5eb85d51-8beaf93caeb89e4ca83f9222",
+      "X-Forwarded-For": "116.203.134.67",
+      "X-Forwarded-Port": "443",
+      "X-Forwarded-Proto": "https"
+    }
   },
-  "body": "{\"key\":\"123\"}",
-  "isBase64Encoded": false
+  "stage-variables": {},
+  "context": {
+    "account-id": "",
+    "api-id": "h8m15ypjy8",
+    "api-key": "",
+    "authorizer-principal-id": "",
+    "caller": "",
+    "cognito-authentication-provider": "",
+    "cognito-authentication-type": "",
+    "cognito-identity-id": "",
+    "cognito-identity-pool-id": "",
+    "http-method": "GET",
+    "stage": "default",
+    "source-ip": "116.203.134.67",
+    "user": "",
+    "user-agent": "Mozilla/4.0 (compatible; cron-job.org; http://cron-job.org/abuse/)",
+    "user-arn": "",
+    "request-id": "30ab8ddc-df0e-4bd7-9397-749a0de3b595",
+    "resource-id": "0nh6hq",
+    "resource-path": "/tntu-module"
+  }
 }
