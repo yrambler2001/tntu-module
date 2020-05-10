@@ -72,6 +72,6 @@
     "domainName": "he1amt93xj.execute-api.us-east-1.amazonaws.com",
     "apiId": "he1amt93xj"
   },
-  "body": "{\"inputData\":{\"city\":\"Roma\",\"category\":\"pizza\",\"url\":\"123\"},\"requestType\":\"list\",\"isMOCK\":true}",
+  "body": "{\"key\":\"123\"}",
   "isBase64Encoded": false
 }
