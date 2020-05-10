@@ -17,7 +17,7 @@ import AWS from 'aws-sdk'
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const getDOM = (HTMLString) => new JSDOM(HTMLString).window.document;
-const doNotUseMock = false
+const doNotUseMock = true
 // eslint-disable-next-line consistent-return
 export const handler = async (a, b) => {
   const currentDate = new Date().toISOString()
