@@ -10,7 +10,7 @@ import fetch from 'node-fetch'
 import { JSDOM } from 'jsdom';
 import uniqBy from 'lodash/uniqBy';
 import groupBy from 'lodash/groupBy';
-import { ignoreCourseIds, key, telegramBotKey, myChatId } from './privateConstants';
+import { ignoreCourseIds, key, telegramBotKey, myChatId, AndriiChatId } from './privateConstants';
 import { courseLecturers, testBlackListWords } from './constants';
 import { mock } from './mock'
 import AWS from 'aws-sdk'
@@ -95,13 +95,11 @@ export const handler = async (a, b) => {
       .map((test) => ({ test, courseName: course.name, lecturer: course.lecturer })))
     .filter((c) => c.length)
     .flat();
-  let transformedData = `${activeTests.length}  активних тестів\n${
-    Object.entries(groupBy(activeTests, 'courseName'))
-      .map(([courseName, tests]) => `    ${tests[0].lecturer} - ${courseName}:${tests.length ? `\n${
-        tests
-          .map((test) => `    ${test.test.name}: ${test.test.startDate} - ${test.test.endDate}`)
-          .join('\n')}` : ' -'}`)
-      .join('\n\n')
+  let transformedData = `${activeTests.length}  активних тестів\n${Object.entries(groupBy(activeTests, 'courseName'))
+    .map(([courseName, tests]) => `    ${tests[0].lecturer} - ${courseName}:${tests.length ? `\n${tests
+      .map((test) => `    ${test.test.name}: ${test.test.startDate} - ${test.test.endDate}`)
+      .join('\n')}` : ' -'}`)
+    .join('\n\n')
   }\n\n    ©Yuriy Synyshyn${doNotUseMock ? '' : '\n(mocked data)'}`
 
   let shouldSend = true;
@@ -147,11 +145,13 @@ export const handler = async (a, b) => {
   const eachDayLogCondition = currentDate.includes('T18:10') || currentDate.includes('T18:11') || currentDate.includes('T18:09')
   console.log({ shouldSend, eachDayLogCondition });
   if (shouldSend || eachDayLogCondition) {
-    await fetch(`https://api.telegram.org/${telegramBotKey}/sendMessage`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ chat_id: myChatId, disable_notification: eachDayLogCondition || silent, text: `${transformedData}` }),
-    });
+    for (const chatId of [myChatId, AndriiChatId]) {
+      await fetch(`https://api.telegram.org/${telegramBotKey}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: chatId, disable_notification: eachDayLogCondition || silent, text: `${transformedData}` }),
+      });
+    }
   }
 
   const endTime = new Date().getTime();
