@@ -74,8 +74,8 @@ export const handler = async (a, b) => {
                 name: row.children[0].textContent,
                 startDate: row.children[1].textContent,
                 time: row.children[2].textContent,
-                inactivePercent: row.children[3].textContent,
-                mark: row.children[4].textContent,
+                // inactivePercent: row.children[3].textContent,
+                mark: row.children[3].textContent,
               },
             );
           allModules.push({ modulesTable, doneModulesTable, courseId, name, lecturer });
@@ -95,6 +95,7 @@ export const handler = async (a, b) => {
       .map((test) => ({ test, courseName: course.name, lecturer: course.lecturer })))
     .filter((c) => c.length)
     .flat();
+  console.log('found', activeTests.length)
   let transformedData = `${activeTests.length}  активних тестів\n${Object.entries(groupBy(activeTests, 'courseName'))
     .map(([courseName, tests]) => `    ${tests[0].lecturer} - ${courseName}:${tests.length ? `\n${tests
       .map((test) => `    ${test.test.name}: ${test.test.startDate} - ${test.test.endDate}`)
